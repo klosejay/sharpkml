@@ -59,6 +59,15 @@ namespace SharpKml.Base
                 return constructor();
             }
 
+            if (string.IsNullOrEmpty(xml?.Namespace))
+            {
+                var comp = new XmlComponent(string.Empty, xml.Name, KmlNamespaces.Kml22Namespace);
+                if (Types.TryGetValue(xml, out Func<Element> cons))
+                {
+                    return cons();
+                }
+            }
+
             return null;
         }
 
